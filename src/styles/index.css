@@ -18,6 +18,7 @@ a {
   font-weight: 500;
   color: #ffffff;
   text-decoration: inherit;
+  font-size: 20px;
 }
 a:hover {
   color: #fff;
