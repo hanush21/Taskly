@@ -1,5 +1,5 @@
 import useTaskStore from "../context/TaskStore"
-import { useRef, useState } from "react";
+import {useState } from "react";
 
 const TaskList = () => {
     const [newTaskName, setNewTaskName] = useState('');
@@ -11,7 +11,8 @@ const TaskList = () => {
     const deleteTask = useTaskStore(state => state.deleteTask)
     const addTask = useTaskStore(state => state.addTask)
     const editTask = useTaskStore(state => state.editTask)
-    const taskCompleted = useTaskStore(state => state.taskCompleted)
+    const taskCompleted = useTaskStore(state => state.completeTask)
+
 
     const AddNewTask = ()=> {
         addTask({id: Date.now(), title: newTaskName , description: newDescTask , completed: false})
@@ -34,6 +35,10 @@ const TaskList = () => {
             setNewDescTask('');
         }
     }
+    const TaskCompleted = (taskId)=>{
+        taskCompleted(taskId);
+        deleteTask(taskId)
+    }
 
 
 
@@ -47,7 +52,7 @@ const TaskList = () => {
                     <div>
                     <button onClick={()=>  editing(task)}>Editar</button>
                     <button onClick={() => deleteTask(task.id)}>Eliminar</button>
-                    <button onClick={() => taskCompleted(task.id)}>Completado</button>
+                    <button onClick={() => TaskCompleted(task.id)}>Completado</button>
                     </div>
                 </li>
             ))}

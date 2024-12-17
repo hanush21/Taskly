@@ -1,8 +1,8 @@
-import {create} from 'zustand'
+import { create } from 'zustand'
 
-
-const useTaskStore = create((set) => ({
+const useTaskStore = create((set, get) => ({
     tasks: [],
+    completedTasks: [],
     addTask: (newTask) => set((state) => ({
         tasks: [...state.tasks, newTask]
     })),
@@ -14,13 +14,15 @@ const useTaskStore = create((set) => ({
     deleteTask: (id) => set((state) => ({
         tasks: state.tasks.filter(task => task.id !== id)
     })),
-    completeTask: (id)=> set((state) => ({
-        tasks: state.tasks.filter(task => task.id !== id)
-    })),
-    
-    filteredTasks: (filter) => {
-        return useTaskStore.getState().tasks.filter(filter)
-    }
+    completeTask: (taskId) => set((state) => {
+        const taskToComplete = state.tasks.find(task => task.id === taskId);
+        return {
+            tasks: state.tasks.filter(task => task.id !== taskId),
+            completedTasks: [...state.completedTasks, { ...taskToComplete, completed: true }]
+        };
+    }),
+    getTasks: () => get().tasks,
+    getCompletedTasks: () => get().completedTasks,
 }))
 
 export default useTaskStore
