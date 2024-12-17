@@ -1,4 +1,4 @@
-import create from 'zustand'
+import {create} from 'zustand'
 
 
 const useTaskStore = create((set) => ({
@@ -6,14 +6,15 @@ const useTaskStore = create((set) => ({
     addTask: (newTask) => set((state) => ({
         tasks: [...state.tasks, newTask]
     })),
-
     editTask: (id, updatedTask) => set((state) => ({
         tasks: state.tasks.map(task =>
             task.id === id ? { ...task, ...updatedTask } : task
         )
     })),
-
     deleteTask: (id) => set((state) => ({
+        tasks: state.tasks.filter(task => task.id !== id)
+    })),
+    completeTask: (id)=> set((state) => ({
         tasks: state.tasks.filter(task => task.id !== id)
     })),
     
