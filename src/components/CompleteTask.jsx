@@ -1,11 +1,9 @@
 import useTaskStore from "../context/TaskStore"
-import { useShallow } from 'zustand/shallow'
 
 
 const CompleteTask = () => {
     const completedTasks = useTaskStore(state => state.completedTasks);
-    const deleteCompletedTask = useTaskStore(state => state.deleteCompletedTask);
-
+    
     
     return (
         <>
